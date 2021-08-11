@@ -10,48 +10,41 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity
-@Table(name = "tb_tema")
-public class Tema {
 
+@Entity
+@Table(name = "tb_temas")
+public class Tema {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-
-	@NotNull(message = "O atributo descrição é obrigatório")
-	@Size(min = 5, max = 250, message = "O atributo descrição deve conter no mínimo 05 e no máximo 250 caracteres")
-	private String descricao;
+	
+	@NotNull
+	private String description;
 	
 	@OneToMany(mappedBy = "tema", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("tema")
-	private List<Postagem> Postagem;
-
+	private List<Postagem> postagem;
+	
 	public long getId() {
 		return id;
 	}
-
 	public void setId(long id) {
 		this.id = id;
 	}
-
-	public String getDescricao() {
-		return descricao;
+	public String getDescription() {
+		return description;
 	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setDescription(String description) {
+		this.description = description;
 	}
-
 	public List<Postagem> getPostagem() {
-		return Postagem;
+		return postagem;
 	}
-
 	public void setPostagem(List<Postagem> postagem) {
-		Postagem = postagem;
+		this.postagem = postagem;
 	}
-
 }

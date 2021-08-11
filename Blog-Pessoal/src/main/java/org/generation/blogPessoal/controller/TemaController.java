@@ -18,36 +18,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/tema")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
+@RequestMapping("/categories")
 public class TemaController {
-
-	@Autowired
+	
+	@Autowired 
 	private TemaRepository repository;
-
+	
 	@GetMapping
-	public ResponseEntity<List<Tema>> getAll() {
+	public ResponseEntity<List<Tema>> getAll(){
 		return ResponseEntity.ok(repository.findAll());
 	}
-
+	
 	@GetMapping("/{id}")
-	public ResponseEntity<Tema> getById(@PathVariable long id) {
-		return repository.findById(id).map(resp -> ResponseEntity.ok(resp))
-				.orElse(ResponseEntity.notFound().build());
+	public ResponseEntity<Tema> getById(@PathVariable long id){
+		return repository.findById(id).map(resp -> ResponseEntity.ok(resp)).orElse(ResponseEntity.notFound().build());
 	}
 
-	@GetMapping("/nome/{nome}")
-	public ResponseEntity<List<Tema>> getByName(@PathVariable String nome) {
-		return ResponseEntity.ok(repository.findAllByDescricaoContainingIgnoreCase(nome));
+	@GetMapping("/description/{description}")
+	public ResponseEntity<List<Tema>> getByDescription(@PathVariable String description) {
+		return ResponseEntity.ok(repository.findAllByDescriptionContainingIgnoreCase(description));
 	}
-
+	
 	@PostMapping
-	public ResponseEntity<Tema> post(@RequestBody Tema tema) {
+	public ResponseEntity<Tema> postTema (@RequestBody Tema tema) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(repository.save(tema));
 	}
-
+	
 	@PutMapping
-	public ResponseEntity<Tema> put(@RequestBody Tema tema) {
+	public ResponseEntity<Tema> putTema (@RequestBody Tema tema) {
 		return ResponseEntity.ok(repository.save(tema));
 	}
 	
